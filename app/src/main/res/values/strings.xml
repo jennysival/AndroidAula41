@@ -1,3 +1,12 @@
 <resources>
     <string name="app_name">AndroidAula41Navigation</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="primeiro_fragmento">Primeiro Fragmento</string>
+    <string name="texto_parametro">Parametro</string>
+    <string name="texto_botao_ir_para_segundo_fragmento">Ir para segundo fragmento</string>
+    <string name="texto_botao_ir_para_terceiro_fragmento">ir para terceiro fragmento</string>
+    <string name="texto_botao_ir_para_primeiro_fragmento">Ir para primeiro fragmento</string>
+    <string name="segundo_fragmento">Segundo Fragmento</string>
+    <string name="terceiro_fragmento">Terceiro Fragmento</string>
 </resources>
