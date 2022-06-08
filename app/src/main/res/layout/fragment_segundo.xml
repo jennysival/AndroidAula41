@@ -24,13 +24,35 @@
         app:layout_constraintTop_toBottomOf="@id/tv_segundo"
         app:layout_constraintStart_toStartOf="parent" />
 
+    <EditText
+        android:id="@+id/et_string"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="@string/hint_digite_um_texto"
+        android:layout_margin="20dp"
+        android:importantForAutofill="no"
+        android:inputType="text"
+        app:layout_constraintTop_toBottomOf="@id/tv_parametro2"
+        app:layout_constraintStart_toStartOf="parent"/>
+
+    <EditText
+        android:id="@+id/et_num"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="@string/hint_digite_um_num"
+        android:layout_margin="20dp"
+        android:importantForAutofill="no"
+        android:inputType="numberDecimal"
+        app:layout_constraintTop_toBottomOf="@id/et_string"
+        app:layout_constraintStart_toStartOf="parent"/>
+
     <Button
         android:id="@+id/botao_ir_primeiro"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/texto_botao_ir_para_primeiro_fragmento"
         android:layout_margin="20dp"
-        app:layout_constraintTop_toBottomOf="@id/tv_parametro2"
+        app:layout_constraintTop_toBottomOf="@id/et_num"
         app:layout_constraintStart_toStartOf="parent"/>
 
     <Button

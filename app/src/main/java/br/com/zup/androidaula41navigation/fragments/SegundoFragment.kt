@@ -5,56 +5,96 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.navigation.findNavController
+import br.com.zup.androidaula41navigation.CAMPO_OBR
 import br.com.zup.androidaula41navigation.R
+import br.com.zup.androidaula41navigation.databinding.FragmentSegundoBinding
 
-// TODO: Rename parameter arguments, choose names that match
-// the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-private const val ARG_PARAM1 = "param1"
-private const val ARG_PARAM2 = "param2"
-
-/**
- * A simple [Fragment] subclass.
- * Use the [SegundoFragment.newInstance] factory method to
- * create an instance of this fragment.
- */
 class SegundoFragment : Fragment() {
-    // TODO: Rename and change types of parameters
-    private var param1: String? = null
-    private var param2: String? = null
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        arguments?.let {
-            param1 = it.getString(ARG_PARAM1)
-            param2 = it.getString(ARG_PARAM2)
-        }
-    }
+    private lateinit var binding: FragmentSegundoBinding
+    private lateinit var textoRecebido: String
+    private lateinit var doubleRecebido: String
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_segundo, container, false)
+    ): View {
+        binding = FragmentSegundoBinding.inflate(inflater,container,false)
+        return binding.root
     }
 
-    companion object {
-        /**
-         * Use this factory method to create a new instance of
-         * this fragment using the provided parameters.
-         *
-         * @param param1 Parameter 1.
-         * @param param2 Parameter 2.
-         * @return A new instance of fragment SegundoFragment.
-         */
-        // TODO: Rename and change types and number of parameters
-        @JvmStatic
-        fun newInstance(param1: String, param2: String) =
-            SegundoFragment().apply {
-                arguments = Bundle().apply {
-                    putString(ARG_PARAM1, param1)
-                    putString(ARG_PARAM2, param2)
-                }
-            }
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+        receberExibirArgs()
+
+        binding.botaoIrPrimeiro.setOnClickListener {
+            enviarDadosPrimeiro()
+        }
+
+        binding.botaoIrTerceiro.setOnClickListener {
+            enviarDadosTerceiro()
+        }
+
+
+
     }
+
+    private fun receberDdos(){
+        this.textoRecebido = binding.etString.text.toString()
+        this.doubleRecebido = binding.etNum.text.toString()
+    }
+
+    private fun enviarDadosPrimeiro(){
+        receberDdos()
+        if(!validarCampos()){
+            view?.findNavController()?.navigate(SegundoFragmentDirections.actionSegundoFragmentToPrimeiroFragment(textoRecebido))
+            limparCampos()
+        }
+
+    }
+
+    private fun enviarDadosTerceiro(){
+        receberDdos()
+        if(!validarCampos()){
+            view?.findNavController()?.navigate(SegundoFragmentDirections.actionSegundoFragmentToTerceiroFragment(doubleRecebido.toDouble().toFloat()))
+            limparCampos()
+        }
+
+    }
+
+    private fun validarCampos(): Boolean{
+        return when{
+            textoRecebido.isEmpty() -> {
+                binding.etString.error = CAMPO_OBR
+                true
+            }
+            doubleRecebido.isEmpty() -> {
+                binding.etNum.error = CAMPO_OBR
+                true
+            }
+            else -> {
+                false
+            }
+        }
+    }
+
+    private fun receberExibirArgs(){
+        val args = SegundoFragmentArgs.fromBundle(requireArguments())
+
+        val parametro = buildString {
+            append("Int: ")
+            append(args.intRecebida.toString())
+            append(" | Boolean: ")
+            append(args.booleanRecebida.toString())
+        }
+
+        binding.tvParametro2.text = parametro
+    }
+
+    private fun limparCampos(){
+        binding.etNum.text.clear()
+        binding.etString.text.clear()
+    }
+
 }

@@ -5,56 +5,120 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.navigation.findNavController
+import br.com.zup.androidaula41navigation.CAMPO_OBR
 import br.com.zup.androidaula41navigation.R
+import br.com.zup.androidaula41navigation.databinding.FragmentTerceiroBinding
 
-// TODO: Rename parameter arguments, choose names that match
-// the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-private const val ARG_PARAM1 = "param1"
-private const val ARG_PARAM2 = "param2"
-
-/**
- * A simple [Fragment] subclass.
- * Use the [TerceiroFragment.newInstance] factory method to
- * create an instance of this fragment.
- */
 class TerceiroFragment : Fragment() {
-    // TODO: Rename and change types of parameters
-    private var param1: String? = null
-    private var param2: String? = null
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        arguments?.let {
-            param1 = it.getString(ARG_PARAM1)
-            param2 = it.getString(ARG_PARAM2)
-        }
-    }
+    private lateinit var binding: FragmentTerceiroBinding
+    private lateinit var booleanRecebido: String
+    private lateinit var numeroRecebido: String
+    private lateinit var textocriado: String
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_terceiro, container, false)
+    ): View {
+        binding = FragmentTerceiroBinding.inflate(inflater,container,false)
+        return binding.root
     }
 
-    companion object {
-        /**
-         * Use this factory method to create a new instance of
-         * this fragment using the provided parameters.
-         *
-         * @param param1 Parameter 1.
-         * @param param2 Parameter 2.
-         * @return A new instance of fragment TerceiroFragment.
-         */
-        // TODO: Rename and change types and number of parameters
-        @JvmStatic
-        fun newInstance(param1: String, param2: String) =
-            TerceiroFragment().apply {
-                arguments = Bundle().apply {
-                    putString(ARG_PARAM1, param1)
-                    putString(ARG_PARAM2, param2)
-                }
-            }
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+        receberExibirArgs()
+
+        binding.botaoIrPrimeiro.setOnClickListener {
+            enviarDadosPrimeiro()
+        }
+
+        binding.botaoIrSegundo.setOnClickListener {
+            enviarDadosSegundo()
+        }
+
+
     }
+
+    private fun receberDados(): String{
+        this.numeroRecebido = binding.etNum.text.toString()
+        this.booleanRecebido = binding.etBoolean.text.toString()
+        return booleanRecebido
+    }
+
+    private fun enviarDadosPrimeiro(){
+        receberDados()
+        if(!verificarCampos()){
+            if(!verificarBoolean(receberDados())){
+                transformarBooleanEmTexto()
+                view?.findNavController()?.navigate(TerceiroFragmentDirections.actionTerceiroFragmentToPrimeiroFragment(textocriado))
+                limparCampos()
+            }
+        }
+
+    }
+
+    private fun enviarDadosSegundo(){
+        receberDados()
+        if(!verificarCampos()){
+            if(!verificarBoolean(receberDados())){
+                view?.findNavController()?.navigate(TerceiroFragmentDirections.actionTerceiroFragmentToSegundoFragment(this.numeroRecebido.toInt(),this.booleanRecebido.toBoolean()))
+                limparCampos()
+            }
+        }
+
+    }
+
+    private fun verificarCampos():Boolean{
+        return when{
+            this.numeroRecebido.isEmpty() -> {
+                binding.etNum.error = CAMPO_OBR
+                true
+            }
+            this.booleanRecebido.isEmpty() -> {
+                binding.etBoolean.error = CAMPO_OBR
+                true
+            }
+            else -> {
+                false
+            }
+        }
+    }
+
+    private fun verificarBoolean(recebido: String):Boolean{
+        return when(recebido){
+            "true" -> {
+
+                false
+            }
+            "false" -> {
+                false
+            }
+            else -> {
+                binding.etBoolean.error = "Digite apenas true ou false"
+                true
+            }
+        }
+    }
+
+    private fun transformarBooleanEmTexto(){
+        textocriado = "Seu ~$booleanRecebido~ acabou de virar essa String linda!"
+    }
+
+    private fun receberExibirArgs(){
+        val args = TerceiroFragmentArgs.fromBundle(requireArguments())
+
+        val parametro = buildString {
+            append("Double: ")
+            append(args.doubleRecebida.toDouble().toString())
+        }
+
+        binding.tvParametro3.text = parametro
+    }
+
+    private fun limparCampos(){
+        binding.etBoolean.text.clear()
+        binding.etNum.text.clear()
+    }
+
 }

@@ -16,6 +16,10 @@
         <action
             android:id="@+id/action_primeiroFragment_to_terceiroFragment"
             app:destination="@id/terceiroFragment" />
+        <argument
+            android:name="stringRecebida"
+            app:argType="string"
+            android:defaultValue='Parâmetro zero' />
     </fragment>
     <fragment
         android:id="@+id/segundoFragment"
@@ -28,6 +32,12 @@
         <action
             android:id="@+id/action_segundoFragment_to_terceiroFragment"
             app:destination="@id/terceiroFragment" />
+        <argument
+            android:name="intRecebida"
+            app:argType="integer" />
+        <argument
+            android:name="booleanRecebida"
+            app:argType="boolean" />
     </fragment>
     <fragment
         android:id="@+id/terceiroFragment"
@@ -40,5 +50,8 @@
         <action
             android:id="@+id/action_terceiroFragment_to_segundoFragment"
             app:destination="@id/segundoFragment" />
+        <argument
+            android:name="doubleRecebida"
+            app:argType="float" />
     </fragment>
 </navigation>

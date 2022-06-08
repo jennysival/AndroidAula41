@@ -9,4 +9,7 @@
     <string name="texto_botao_ir_para_primeiro_fragmento">Ir para primeiro fragmento</string>
     <string name="segundo_fragmento">Segundo Fragmento</string>
     <string name="terceiro_fragmento">Terceiro Fragmento</string>
+    <string name="hint_digite_um_num">Digite um número</string>
+    <string name="hint_digite_true_ou_false">Digite true ou false</string>
+    <string name="hint_digite_um_texto">Digite um texto</string>
 </resources>

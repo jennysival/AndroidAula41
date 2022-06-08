@@ -1,7 +1,8 @@
 plugins {
     id 'com.android.application'
     id 'org.jetbrains.kotlin.android'
-    id("kotlin-parcelize")
+    // or for Kotlin-only projects
+    id("androidx.navigation.safeargs.kotlin")
 }
 
 android {
@@ -36,8 +37,14 @@ android {
 }
 
 dependencies {
+    implementation("androidx.navigation:navigation-fragment:2.4.2")
+    implementation("androidx.navigation:navigation-ui:2.4.2")
     implementation("androidx.navigation:navigation-fragment-ktx:2.4.2")
     implementation("androidx.navigation:navigation-ui-ktx:2.4.2")
+    implementation("androidx.navigation:navigation-dynamic-features-fragment:2.4.2")
+    androidTestImplementation("androidx.navigation:navigation-testing:2.4.2")
+    implementation("androidx.navigation:navigation-compose:2.4.2")
+
 
 
     implementation 'androidx.core:core-ktx:1.7.0'
